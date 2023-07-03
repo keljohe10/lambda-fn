@@ -25,9 +25,9 @@ jobs:
         aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws configure set region ${{ secrets.AWS_REGION }}
-
+    
     - name: Zip Lambda function
-      run: zip function.zip src/handler.js
+      run: cd handler && zip ../function.zip handler.js && cd ..
 
     - name: Deploy to AWS Lambda
       run: |
