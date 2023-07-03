@@ -27,7 +27,7 @@ jobs:
         aws configure set region ${{ secrets.AWS_REGION }}
     
     - name: Zip Lambda function
-      run: cd handler && zip ../function.zip handler.js && cd ..
+      run: cd src && zip ../function.zip handler.js && cd ..
 
     - name: Deploy to AWS Lambda
       run: |
