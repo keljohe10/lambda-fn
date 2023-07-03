@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports.handler = async () => {
-  console.log('Hello World');
+module.exports.handler = async (event) => {
+  console.log('Hello World: ', event);
   return {
     statusCode: 200,
   };
