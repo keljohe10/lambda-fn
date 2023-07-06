@@ -28,7 +28,20 @@ jobs:
     
     - name: Zip Lambda function
       run: cd src && zip ../function.zip handler.js && cd ..
-
+    
     - name: Deploy to AWS Lambda
       run: |
-        aws lambda update-function-code --function-name handler --zip-file fileb://function.zip
+        FUNCTION_NAME="lambda-template"
+        ZIP_FILE="fileb://function.zip"
+
+        # Try to update the function code.
+        UPDATE_OUTPUT=$(aws lambda update-function-code --function-name $FUNCTION_NAME --zip-file $ZIP_FILE 2>&1)
+
+        # If the update-function-code command failed because the function does not exist, create the function.
+        if [[ $UPDATE_OUTPUT == *"ResourceNotFoundException"* ]]; then
+          aws lambda create-function --function-name $FUNCTION_NAME \
+            --zip-file $ZIP_FILE \
+            --handler handler.handler \
+            --runtime nodejs14.x \
+            --role arn:aws:iam::ACCOUNT_ID:role/service-role/YourLambdaExecutionRole
+        fi
