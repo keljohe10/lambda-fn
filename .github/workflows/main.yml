@@ -28,6 +28,7 @@ jobs:
     
     - name: Zip Lambda function
       run: cd src && zip ../function.zip handler.js && cd ..
-    
+
     - name: Deploy to AWS Lambda
-      run: aws lambda create-function --function-name lambda-template --zip-file fileb://function.zip --handler handler.handler --runtime nodejs18.x --role arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/service-role/lambdaFunction
+      run: |
+        aws lambda update-function-code --function-name handler --zip-file fileb://function.zip
