@@ -2,8 +2,8 @@
 
 module.exports.handler = async (event) => {
 
-  const message  = `Hello ${event.id} ${event.name}! Keep being awesome!`;
-  console.log(message);
+  const message = JSON.parse(event);
+  console.log(event);
 
   return {
     statusCode: 200,
