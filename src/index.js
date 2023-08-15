@@ -1,12 +1,11 @@
 'use strict';
 
 module.exports.handler = async (event) => {
+  const { body } = event;
 
-  const message = JSON.parse(event);
-  console.log(event);
+  console.log(event, body);
 
   return {
     statusCode: 200,
-    message,
   };
 };
